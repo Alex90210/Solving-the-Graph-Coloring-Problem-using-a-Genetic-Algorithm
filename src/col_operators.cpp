@@ -84,40 +84,7 @@ std::vector<int> find_non_adjacent_colors(const std::vector<int>& all_colors, co
     return non_adjacent_colors;
 }
 
-std::vector<int> calculate_conflict_fitness(const std::vector<std::vector<int>>& population,
-                                            const std::vector<std::list<int>>& adjacency_list) {
-
-    std::vector<int> pop_values;
-
-    for (auto& chromosome: population) {
-        int fitness = 0;
-        for (size_t i = 0; i < chromosome.size(); ++i) {
-            int vertex_color = chromosome[i];
-            for (int neighbor: adjacency_list[i]) {
-                if (vertex_color == chromosome[neighbor]) {
-                    fitness++;
-                }
-            }
-        }
-        pop_values.push_back(fitness / 2);
-    }
-
-    return pop_values;
-}
-
 int get_coloring_number(const std::vector<int>& chromosome) {
     std::unordered_set<int> unique_colors(chromosome.begin(), chromosome.end());
     return unique_colors.size();
-}
-
-std::vector<int> calculate_coloring_fitness(const std::vector<std::vector<int>>& population) {
-    std::vector<int> population_coloring_numbers;
-    population_coloring_numbers.reserve(population.size());
-
-    for (const auto& chromosome : population) {
-        int coloring_number = get_coloring_number(chromosome);
-        population_coloring_numbers.push_back(coloring_number);
-    }
-
-    return population_coloring_numbers;
 }

@@ -1,0 +1,24 @@
+Configuration 1:
+    - selection based on conflict fitness (+1 for each conflict)
+    - 0.5 selection pressure
+    - corrective mutation
+    - 100% non-shuffle crossover
+    - best solution graph degree
+    myciel5 ((47,236), 6, MYC):
+        Best Solution: 8 (Time: 6.0792s)
+        Worst Solution: 14 (Time: 8.91595s)
+    queen6_6.col ((36,290), 7, SGB):
+        Best Solution: 15 (Time: 12.098s)
+        Worst Solution: 16 (Time: 15.0273s)
+    Parameters:
+            const int pop_size {50}; // A smaller population seems to improve the solution
+            const int elite_pool {0}; // Elitism, in this case, seems to worsen the solution
+            const double cx_prob {0.7};
+            const int vertices_nr = count_vertices(adjacencyList);
+            const int graph_degree = find_max_degree(adjacencyList);
+            const int generations {6000};
+            const int runs {10};
+
+Configuration 2:
+    - A interesting idea is to insert into the population new chromosomes that are generated with
+    the current best solution in mind.

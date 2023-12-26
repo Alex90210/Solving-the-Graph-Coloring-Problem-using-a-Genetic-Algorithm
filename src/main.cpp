@@ -3,7 +3,7 @@
 
 int main() {
     std::vector<std::list<int>> adjacencyList;
-    std::string filename = "../test_instances/myciel5.col";
+    std::string filename = "../test_instances/myciel7.col";
 
     read_col_file(filename, adjacencyList);
 
@@ -20,13 +20,14 @@ int main() {
     int maxDegree = find_max_degree(adjacencyList);
     std::cout << "The maximum degree of the graph is: " << maxDegree << std::endl;
 
-    const int pop_size {50}; // A smaller population seems to improve the solution
+    const int pop_size {100}; // A smaller population seems to improve the solution
     const int elite_pool {0}; // Elitism, in this case, seems to worsen the solution
-    const double cx_prob {0.7};
+    const double mut_p {0.5};
+    const double cx_prob {0.75};
     const int vertices_nr = count_vertices(adjacencyList);
     const int graph_degree = find_max_degree(adjacencyList);
     const int generations {4000};
-    const int runs {30};
+    const int runs {10};
 
     std::vector<double> times;
     double bestTime = std::numeric_limits<double>::max();
@@ -37,7 +38,7 @@ int main() {
     for (int run = 0; run < runs; ++run) {
         auto start = std::chrono::high_resolution_clock::now();
 
-        int solution = genetic_algorithm(pop_size, elite_pool, vertices_nr, graph_degree, generations, cx_prob, adjacencyList);
+        int solution = genetic_algorithm(pop_size, elite_pool, vertices_nr, graph_degree, generations, mut_p, cx_prob, adjacencyList);
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;

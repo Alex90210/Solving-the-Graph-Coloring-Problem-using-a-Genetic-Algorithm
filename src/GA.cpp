@@ -1,6 +1,6 @@
 #include "../include/GA.h"
 
-int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_degree, int max_gen,
+int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_degree, int max_gen, double mut_p,
                       const double& cx_prob, const std::vector<std::list<int>>& adjacency_list) {
 
     std::vector<std::vector<int>> pop = generate_population(pop_size, vertices_nr, graph_degree);
@@ -13,23 +13,16 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
     while (current_generation < max_gen) {
 
         current_generation++;
-        // SELECTION
-        selection(pop, pop_size, elite_pool, adjacency_list);
+        selection(pop, pop_size, elite_pool, vertices_nr, graph_degree, adjacency_list);
 
+            // corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr);
+            // random_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr);
+            corrective_mutation_randomly(pop, graph_degree, mut_p, adjacency_list, vertices_nr);
 
-
-        // MUTATION
-        if (min_conflict >= 4) // this works better alone
-            corrective_mutation(pop, graph_degree, adjacency_list, vertices_nr);
-        else
-            random_mutation(pop, graph_degree, adjacency_list, vertices_nr);
-
-
-        // CROSSOVER
-        simple_crossover(pop);
+        // simple_crossover(pop);
         // crossover(pop, cx_prob);
         // crossover_by_fitness(pop, cx_prob, adjacency_list);
-        // crossover_random_shuffle(pop, cx_prob);
+        crossover_random_shuffle(pop, cx_prob);
 
 
         // EVALUATION

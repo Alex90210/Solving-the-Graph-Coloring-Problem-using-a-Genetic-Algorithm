@@ -67,12 +67,6 @@ build CMakeFiles/Homework3.dir/src/col_operators.cpp.obj: CXX_COMPILER__Homework
   OBJECT_DIR = CMakeFiles\Homework3.dir
   OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
 
-build CMakeFiles/Homework3.dir/src/genetic_operators.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/genetic_operators.cpp || cmake_object_order_depends_target_Homework3
-  DEP_FILE = CMakeFiles\Homework3.dir\src\genetic_operators.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Homework3.dir
-  OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
-
 build CMakeFiles/Homework3.dir/src/GA.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/GA.cpp || cmake_object_order_depends_target_Homework3
   DEP_FILE = CMakeFiles\Homework3.dir\src\GA.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
@@ -85,6 +79,30 @@ build CMakeFiles/Homework3.dir/src/utils.cpp.obj: CXX_COMPILER__Homework3_unscan
   OBJECT_DIR = CMakeFiles\Homework3.dir
   OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
 
+build CMakeFiles/Homework3.dir/src/ag_crossover.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/ag_crossover.cpp || cmake_object_order_depends_target_Homework3
+  DEP_FILE = CMakeFiles\Homework3.dir\src\ag_crossover.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Homework3.dir
+  OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
+
+build CMakeFiles/Homework3.dir/src/ag_mutation.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/ag_mutation.cpp || cmake_object_order_depends_target_Homework3
+  DEP_FILE = CMakeFiles\Homework3.dir\src\ag_mutation.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Homework3.dir
+  OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
+
+build CMakeFiles/Homework3.dir/src/ag_selection.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/ag_selection.cpp || cmake_object_order_depends_target_Homework3
+  DEP_FILE = CMakeFiles\Homework3.dir\src\ag_selection.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Homework3.dir
+  OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
+
+build CMakeFiles/Homework3.dir/src/ag_fitness.cpp.obj: CXX_COMPILER__Homework3_unscanned_Debug C$:/SEM3/AGen/Homework3/src/ag_fitness.cpp || cmake_object_order_depends_target_Homework3
+  DEP_FILE = CMakeFiles\Homework3.dir\src\ag_fitness.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Homework3.dir
+  OBJECT_FILE_DIR = CMakeFiles\Homework3.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Homework3
@@ -93,7 +111,7 @@ build CMakeFiles/Homework3.dir/src/utils.cpp.obj: CXX_COMPILER__Homework3_unscan
 #############################################
 # Link the executable Homework3.exe
 
-build Homework3.exe: CXX_EXECUTABLE_LINKER__Homework3_Debug CMakeFiles/Homework3.dir/src/main.cpp.obj CMakeFiles/Homework3.dir/src/generators.cpp.obj CMakeFiles/Homework3.dir/src/col_operators.cpp.obj CMakeFiles/Homework3.dir/src/genetic_operators.cpp.obj CMakeFiles/Homework3.dir/src/GA.cpp.obj CMakeFiles/Homework3.dir/src/utils.cpp.obj
+build Homework3.exe: CXX_EXECUTABLE_LINKER__Homework3_Debug CMakeFiles/Homework3.dir/src/main.cpp.obj CMakeFiles/Homework3.dir/src/generators.cpp.obj CMakeFiles/Homework3.dir/src/col_operators.cpp.obj CMakeFiles/Homework3.dir/src/GA.cpp.obj CMakeFiles/Homework3.dir/src/utils.cpp.obj CMakeFiles/Homework3.dir/src/ag_crossover.cpp.obj CMakeFiles/Homework3.dir/src/ag_mutation.cpp.obj CMakeFiles/Homework3.dir/src/ag_selection.cpp.obj CMakeFiles/Homework3.dir/src/ag_fitness.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Homework3.dir

@@ -1,0 +1,28 @@
+Things to try:
+    - random mutation + penalty fitness
+    - corrective mutation (with a probability rate, otherwise the penalties will not be applied) + penalty fitness
+    - insert new chromosomes with the current best colorization in mind. All the other chromosomes should be
+    normalized such that no number(=color) is skipped.
+
+------------------------------------------------
+
+1. SELECTION:
+    - WHEEL OF FORTUNE
+2. MUTATION:
+    - CORRECTIVE MUTATION ON CONFLICTING COLORS
+    - RANDOM MUTATION ON CONFLICTING COLORS
+3. CROSSOVER:
+    - 100% CX PROBABILITY CROSSOVER
+    - ADJUSTABLE CX PROBABILITY CROSSOVER
+    - CROSSOVER BY FITNESS VALUE
+    - ADJUSTABLE CROSSOVER RANDOM SHUFFLE
+4. EVALUATION:
+    - BY COLOR FITNESS
+    - BY CONFLICT FITNESS
+
+0.0 Correction operator?
+0.1 Penalty Evaluation
+    - for each conflict, add a penalty equal to the worst number of colors (the chromatic number)
+EXAMPLE: 50 vertices, 14 colors, 2 conflicts
+         => Fitness = 114.
+    - use both a penalty and a correction operator
