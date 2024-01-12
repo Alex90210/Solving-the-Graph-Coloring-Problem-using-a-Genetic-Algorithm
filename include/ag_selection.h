@@ -7,6 +7,7 @@
 #include "generators.h"
 #include "ag_fitness.h"
 #include "col_operators.h"
+#include "utils.h"
 
 std::vector<std::vector<int>> elitism(const std::vector<std::vector<int>>& population,
                                       const std::vector<int>& population_values,

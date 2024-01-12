@@ -31,7 +31,8 @@ void crossover(std::vector<std::vector<int>>& population, const double& crossove
 void crossover_by_fitness(std::vector<std::vector<int>>& population, const double& crossover_probability,
                           const std::vector<std::list<int>>& adjacency_list) {
 
-    std::vector<int> pop_values = calculate_conflict_fitness(population, adjacency_list);
+    // std::vector<int> pop_values = calculate_conflict_fitness_with(population, adjacency_list);
+    std::vector<int> pop_values = calculate_col_fit_with_penalizing(population, adjacency_list);
 
     std::vector<std::size_t> sorted_indices(population.size());
     std::iota(sorted_indices.begin(), sorted_indices.end(), 0);

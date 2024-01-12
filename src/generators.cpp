@@ -46,3 +46,15 @@ std::vector<std::vector<int>> generate_population(const unsigned& population_siz
 
     return generated_population;
 }
+
+std::vector<std::vector<int>> get_two_random_parents(const std::vector<std::vector<int>>& population) {
+
+    int first_random_index = get_random_int(0, population.size() - 1);
+    int second_random_index = first_random_index;
+
+    while (second_random_index == first_random_index) {
+        second_random_index = get_random_int(0, population.size() - 1);
+    }
+
+    return {population[first_random_index], population[second_random_index]};
+}

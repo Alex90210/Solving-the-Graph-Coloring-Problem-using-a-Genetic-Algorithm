@@ -3,11 +3,11 @@
 
 int main() {
     std::vector<std::list<int>> adjacencyList;
-    std::string filename = "../test_instances/myciel7.col";
+    std::string filename = "../test_instances/queen7_7.col";
 
     read_col_file(filename, adjacencyList);
 
-    int vertexNumber = 0; // Assuming the vertex numbering starts from 0
+    int vertexNumber = 0;
     for (const auto& neighbors : adjacencyList) {
         std::cout << "Vertex " << vertexNumber << ": ";
         for (int neighbor : neighbors) {
@@ -20,10 +20,11 @@ int main() {
     int maxDegree = find_max_degree(adjacencyList);
     std::cout << "The maximum degree of the graph is: " << maxDegree << std::endl;
 
-    const int pop_size {100}; // A smaller population seems to improve the solution
-    const int elite_pool {0}; // Elitism, in this case, seems to worsen the solution
-    const double mut_p {0.5};
-    const double cx_prob {0.75};
+    const int pop_size {50};
+    const int elite_pool {25};
+    const double mut_p {0};
+    const double cx_prob {1.0};
+    const double corrective_mut_p {0.25};
     const int vertices_nr = count_vertices(adjacencyList);
     const int graph_degree = find_max_degree(adjacencyList);
     const int generations {4000};

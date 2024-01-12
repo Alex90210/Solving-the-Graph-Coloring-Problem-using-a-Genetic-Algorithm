@@ -55,3 +55,89 @@ void random_mutation_on_every_conflict(std::vector<std::vector<int>>& population
         }
     }
 }
+
+void random_mutation(std::vector<std::vector<int>>& population, const int& graph_degree,
+                     const double& mutation_probability) {
+
+    static std::vector<int> all_colors = create_color_vector(graph_degree);
+    for (auto& chromosome : population) {
+        for (size_t i = 0; i < chromosome.size(); ++i) {
+            // Random chance of mutation
+            if (get_random_double(0, 1) < mutation_probability) {
+                int new_color = all_colors[get_random_int(0, graph_degree - 1)];
+                chromosome[i] = new_color;
+            }
+        }
+    }
+}
+
+void corrective_mutation_population(std::vector<std::vector<int>>& population,
+                                    const std::vector<std::list<int>>& adjacency_list,
+                                    const int& max_color,
+                                    const double& mutation_probability) {
+    for (auto& chromosome : population) {
+        // Apply mutation based on the probability
+        if (get_random_double(0.0, 1.0) < mutation_probability) {
+            for (size_t vertex = 0; vertex < chromosome.size(); ++vertex) {
+                std::set<int> used_colors;
+
+                // Get colors used by adjacent vertices
+                for (const int& neighbor : adjacency_list[vertex]) {
+                    used_colors.insert(chromosome[neighbor]);
+                }
+
+                // Find the smallest color not used by neighbors
+                for (int color = 1; color <= max_color; ++color) {
+                    if (used_colors.find(color) == used_colors.end()) {
+                        chromosome[vertex] = color;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool has_conflict(const std::vector<int>& chromosome, const std::vector<std::list<int>>& adjacency_list) {
+    for (size_t vertex = 0; vertex < chromosome.size(); ++vertex) {
+        for (const int& neighbor : adjacency_list[vertex]) {
+            if (chromosome[vertex] == chromosome[neighbor]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void corrective_mutation_until_valid(std::vector<std::vector<int>>& population,
+                                     const std::vector<std::list<int>>& adjacency_list,
+                                     const int& max_color,
+                                     const int max_iterations) { // Set a limit to iterations
+    for (auto& chromosome : population) {
+        int iterations = 0;
+        while (has_conflict(chromosome, adjacency_list) && iterations < max_iterations) {
+            for (size_t vertex = 0; vertex < chromosome.size(); ++vertex) {
+                std::set<int> used_colors;
+
+                // Get colors used by adjacent vertices
+                for (const int& neighbor : adjacency_list[vertex]) {
+                    used_colors.insert(chromosome[neighbor]);
+                }
+
+                // Find the smallest color not used by neighbors
+                for (int color = 1; color <= max_color; ++color) {
+                    if (used_colors.find(color) == used_colors.end()) {
+                        chromosome[vertex] = color;
+                        break;
+                    }
+                }
+            }
+            iterations++;
+        }
+
+        // Optional: Handle the case where a valid solution couldn't be found
+        if (iterations >= max_iterations) {
+            // Handle accordingly, e.g., log a message or flag the chromosome
+        }
+    }
+}
