@@ -34,7 +34,8 @@ std::vector<int> calculate_coloring_fitness(const std::vector<std::vector<int>>&
 }
 
 std::vector<int> calculate_col_fit_with_penalizing(const std::vector<std::vector<int>>& population,
-                                                   const std::vector<std::list<int>>& adjacency_list) {
+                                                   const std::vector<std::list<int>>& adjacency_list,
+                                                   const int& best_colorization) {
     std::vector<int> population_fitness;
     population_fitness.reserve(population.size());
 
@@ -42,13 +43,13 @@ std::vector<int> calculate_col_fit_with_penalizing(const std::vector<std::vector
 
     for (const auto& chromosome : population) {
         int fitness = get_coloring_number(chromosome);
+        // int fitness = {0};
         std::set<std::pair<int, int>> counted_conflicts;
 
         for (size_t i = 0; i < chromosome.size(); ++i) {
             int vertex_color = chromosome[i];
             for (int neighbor : adjacency_list[i]) {
                 if (vertex_color == chromosome[neighbor]) {
-                    // Ensure each conflict is counted only once
                     if (counted_conflicts.insert(std::minmax(i, static_cast<size_t>(neighbor))).second) {
                         fitness += max_degree;
                     }

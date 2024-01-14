@@ -14,6 +14,6 @@ std::vector<std::vector<int>> elitism(const std::vector<std::vector<int>>& popul
                                       size_t elite_pool);
 std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop,int pop_size, int elite_pool,
                                         int nr_vertices, int graph_degree,
-                                        const std::vector<std::list<int>>& adjacency_list);
+                                        const std::vector<std::list<int>>& adjacency_list, int best_colorization);
 
 #endif

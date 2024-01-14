@@ -10,6 +10,7 @@ std::vector<int> calculate_conflict_fitness(const std::vector<std::vector<int>>&
                                             const std::vector<std::list<int>>& adjacency_list);
 std::vector<int> calculate_coloring_fitness(const std::vector<std::vector<int>>& population);
 std::vector<int> calculate_col_fit_with_penalizing(const std::vector<std::vector<int>>& population,
-                                                   const std::vector<std::list<int>>& adjacency_list);
+                                                   const std::vector<std::list<int>>& adjacency_list,
+                                                   const int& best_colorization);
 
 #endif

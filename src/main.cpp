@@ -20,14 +20,14 @@ int main() {
     int maxDegree = find_max_degree(adjacencyList);
     std::cout << "The maximum degree of the graph is: " << maxDegree << std::endl;
 
-    const int pop_size {50};
-    const int elite_pool {25};
-    const double mut_p {0};
-    const double cx_prob {1.0};
+    const int pop_size {100};
+    const int elite_pool {75};
+    const double mut_p {0.1};
+    const double cx_prob {0.3};
     const double corrective_mut_p {0.25};
     const int vertices_nr = count_vertices(adjacencyList);
     const int graph_degree = find_max_degree(adjacencyList);
-    const int generations {4000};
+    const int generations {3000};
     const int runs {10};
 
     std::vector<double> times;

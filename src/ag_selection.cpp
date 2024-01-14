@@ -21,14 +21,15 @@ std::vector<std::vector<int>> elitism(const std::vector<std::vector<int>>& popul
 
 std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop,int pop_size, int elite_pool,
                                         int nr_vertices, int graph_degree,
-                                        const std::vector<std::list<int>>& adjacency_list) {
+                                        const std::vector<std::list<int>>& adjacency_list, int best_colorization) {
 
 
     // std::vector<int> pop_values = calculate_coloring_fitness(pop);
-    std::vector<int> pop_values = calculate_col_fit_with_penalizing(pop, adjacency_list);
+    std::vector<int> pop_values = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
+    // std::vector<int> pop_values = calculate_conflict_fitness(pop, adjacency_list);
 
-    /*scale_values(pop_values, 1.0, 2.0);
-    raise_to_power(pop_values, 9);*/
+    scale_values(pop_values, 1.0, 2.0);
+    raise_to_power(pop_values, 0.1);
 
     std::vector<std::vector<int>> elite_population = elitism(pop, pop_values, elite_pool);
 
@@ -37,7 +38,7 @@ std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop
     // Individual probability
     std::vector<double> probability_vector;
     for (const auto& i : pop_values) {
-        probability_vector.push_back((1.0 / i) / total_fitness);
+        probability_vector.push_back((1.0 / (i + 0.0001)) / total_fitness);
     }
 
     // Normalize probabilities
@@ -52,13 +53,15 @@ std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop
     accumulated_probability_vector.back() = 1.00;
 
     std::vector<std::vector<int>> new_population;
-    for (size_t i = 0; i < pop_size / 2 - elite_pool; ++i) {
+    for (size_t i = 0; i < pop_size - elite_pool; ++i) {
         int index = select_index(accumulated_probability_vector);
         new_population.push_back(pop[index]);
     }
     // Insert newly generated chromosomes into the new population
-    std::vector<std::vector<int>> new_chromosomes = generate_population(pop_size / 2, nr_vertices, graph_degree);
-    new_population.insert(new_population.end(), new_chromosomes.begin(), new_chromosomes.end());
+    /*std::vector<std::vector<int>> new_chromosomes;
+    new_chromosomes.reserve(pop_size / 2);
+    new_chromosomes = generate_population(pop_size / 2, nr_vertices, graph_degree);
+    new_population.insert(new_population.end(), new_chromosomes.begin(), new_chromosomes.end());*/
 
     new_population.insert(new_population.end(), elite_population.begin(), elite_population.end());
 
