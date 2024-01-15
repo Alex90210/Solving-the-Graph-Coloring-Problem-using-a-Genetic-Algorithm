@@ -5,13 +5,11 @@ void corrective_mutation_on_every_conflict(std::vector<std::vector<int>>& popula
                                            double mutation_probability, int best_colorization) {
 
     for (auto& chromosome : population) {
-        // Construct all_colors from the current chromosome
         std::vector<int> all_colors(chromosome.begin(), chromosome.end());
         std::sort(all_colors.begin(), all_colors.end());
         all_colors.erase(std::unique(all_colors.begin(), all_colors.end()), all_colors.end());
-
         if (get_random_double(0, 1) <= mutation_probability) {
-            for (size_t i = 0; i < vertices_nr; ++i) {
+            for (size_t i = 0; i < chromosome.size(); ++i) {
                 if (has_same_color_neighbor(i, chromosome, adjacency_list)) {
                     std::vector<int> adjacent_colors = get_adjacent_colors(i, chromosome, adjacency_list);
                     std::vector<int> valid_colors = find_non_adjacent_colors(all_colors, adjacent_colors);
@@ -32,7 +30,7 @@ void corrective_mutation_randomly(std::vector<std::vector<int>>& population, con
 
     static std::vector<int> all_colors = create_color_vector(graph_degree);
     for (auto& chromosome : population) {
-        for (size_t i = 0; i < vertices_nr; ++i) {
+        for (size_t i = 0; i < graph_degree; ++i) {
             // Random chance of mutation
             if (get_random_double(0, 1) < mutation_probability) {
                 if (has_same_color_neighbor(i, chromosome, adjacency_list)) {
@@ -52,8 +50,12 @@ void corrective_mutation_randomly(std::vector<std::vector<int>>& population, con
 void random_mutation_on_every_conflict(std::vector<std::vector<int>>& population, const int& graph_degree,
                                        const std::vector<std::list<int>>& adjacency_list, const int& vertices_nr) {
 
-    static std::vector<int> all_colors = create_color_vector(graph_degree);
     for (auto& chromosome : population) {
+        // Construct all_colors from the current chromosome
+        std::vector<int> all_colors(chromosome.begin(), chromosome.end());
+        std::sort(all_colors.begin(), all_colors.end());
+        all_colors.erase(std::unique(all_colors.begin(), all_colors.end()), all_colors.end());
+
         for (size_t i = 0; i < vertices_nr; ++i) {
             if (has_same_color_neighbor(i, chromosome, adjacency_list)) {
                 int new_color = all_colors[get_random_int(0, all_colors.size() - 1)];
@@ -67,20 +69,22 @@ void random_mutation(std::vector<std::vector<int>>& population, const int& graph
                      const double& mutation_probability) {
 
     for (auto& chromosome : population) {
-        // Construct all_colors from the current chromosome
-        std::vector<int> all_colors(chromosome.begin(), chromosome.end());
-        std::sort(all_colors.begin(), all_colors.end());
-        all_colors.erase(std::unique(all_colors.begin(), all_colors.end()), all_colors.end());
+        // Construct valid_colors in the range [0, graph_degree - 1]
+        std::vector<int> valid_colors;
+        for (int color = 0; color < graph_degree; ++color) {
+            valid_colors.push_back(color);
+        }
 
+        // Random chance of mutation
         for (size_t i = 0; i < chromosome.size(); ++i) {
-            // Random chance of mutation
             if (get_random_double(0, 1) < mutation_probability) {
-                int new_color = all_colors[get_random_int(0, all_colors.size() - 1)];
+                int new_color = valid_colors[get_random_int(0, valid_colors.size() - 1)];
                 chromosome[i] = new_color;
             }
         }
     }
 }
+
 
 void corrective_mutation_population(std::vector<std::vector<int>>& population,
                                     const std::vector<std::list<int>>& adjacency_list,
@@ -151,4 +155,14 @@ void corrective_mutation_until_valid(std::vector<std::vector<int>>& population,
             // Handle accordingly, e.g., log a message or flag the chromosome
         }
     }
+}
+
+void forced_hill_climber(const std::vector<std::vector<int>>& population, const std::vector<std::list<int>>& adjacency_list) {
+    std::vector<int> evaluated = calculate_col_fit_with_penalizing(population, adjacency_list, 10);
+    auto iter = std::min_element(evaluated.begin(), evaluated.end());
+    int best_fitness = *iter;
+    int index = std::distance(evaluated.begin(), iter);
+    std::vector<int> best_chromosome = population[index];
+
+    // Work on this if you have time
 }

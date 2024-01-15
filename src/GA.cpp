@@ -3,13 +3,15 @@
 int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_degree, int max_gen, double mut_p,
                       const double& cx_prob, const std::vector<std::list<int>>& adjacency_list) {
 
-    std::vector<std::vector<int>> pop = generate_population(pop_size, vertices_nr, graph_degree);
+    std::vector<std::vector<int>> pop = generate_population(pop_size, vertices_nr, graph_degree, graph_degree);
 
     int best_colorization {graph_degree + 1};
     int new_best_colorization {graph_degree + 2};
 
-    // std::vector<int> pop_values_conflicts = calculate_conflict_fitness(pop, adjacency_list);
-    std::vector<int> pop_values_conflicts = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
+    std::vector<int> pop_values_conflicts = calculate_conflict_fitness(pop, adjacency_list);
+    auto iter = std::min_element(pop_values_conflicts.begin(), pop_values_conflicts.end());
+    int min_conflict = *iter;
+    std::vector<int> pop_values_conflicts_and_penalizing = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
 
     int current_generation {0};
     int generations_without_improvement {0};
@@ -19,24 +21,33 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
         current_generation++;
         pop = selection(pop, pop_size, elite_pool, vertices_nr, graph_degree, adjacency_list, best_colorization);
 
-        if (generations_without_improvement > 50000) {
-            random_mutation(pop, graph_degree, mut_p);
+        if (generations_without_improvement > 50) {
+            random_mutation(pop, graph_degree, 0.3);
+            // corrective_mutation_randomly(pop, graph_degree, mut_p, adjacency_list, vertices_nr);
+            crossover_random_shuffle(pop, cx_prob);
             generations_without_improvement = 0;
         }
+        /*else if (min_conflict < 4) {
+            corrective_mutation_randomly(pop, graph_degree, mut_p, adjacency_list, vertices_nr);
+            crossover_by_fitness(pop, cx_prob, adjacency_list);
+        }*/
         else {
             corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);
+            crossover_by_fitness(pop, cx_prob, adjacency_list);
         }
 
         // corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);
         // random_mutation(pop, graph_degree, mut_p);
+        // crossover_random_shuffle(pop, cx_prob);
+        // simple_crossover(pop);
+        // crossover_by_fitness(pop, cx_prob, adjacency_list);
 
-        crossover_by_fitness(pop, cx_prob, adjacency_list);
-
-        pop_values_conflicts = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
+        pop_values_conflicts_and_penalizing = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
+        pop_values_conflicts = calculate_conflict_fitness(pop, adjacency_list);
         std::vector<int> pop_values_colors = calculate_coloring_fitness(pop);
 
-        for (size_t i{0}; i < pop_values_conflicts.size(); ++i) {
-            if (pop_values_colors[i] < new_best_colorization && pop_values_conflicts[i] < graph_degree) {
+        for (size_t i{0}; i < pop_values_conflicts_and_penalizing.size(); ++i) {
+            if (pop_values_colors[i] < new_best_colorization && pop_values_conflicts_and_penalizing[i] < graph_degree) {
                 new_best_colorization = pop_values_colors[i];
             }
         }

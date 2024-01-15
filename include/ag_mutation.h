@@ -6,6 +6,7 @@
 #include <set>
 #include "col_operators.h"
 #include "generators.h"
+#include "ag_fitness.h"
 
 void corrective_mutation_on_every_conflict(std::vector<std::vector<int>>& population, const int& graph_degree,
                                            const std::vector<std::list<int>>& adjacency_list, const int& vertices_nr,

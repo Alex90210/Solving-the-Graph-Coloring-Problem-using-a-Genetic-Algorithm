@@ -4,7 +4,7 @@
 
 int main() {
     std::vector<std::list<int>> adjacencyList;
-    std::string filename = "../test_instances/queen8_8.col";
+    std::string filename = "../test_instances/queen7_7.col";
 
     read_col_file(filename, adjacencyList);
 
@@ -21,14 +21,14 @@ int main() {
     int maxDegree = find_max_degree(adjacencyList);
     std::cout << "The maximum degree of the graph is: " << maxDegree << std::endl;
 
-    const int pop_size {1};
+    const int pop_size {50};
     const int elite_pool {0};
-    const double mut_p {1.0};
+    const double mut_p {0.5};
     const double cx_prob {0.3};
     const double corrective_mut_p {0.25};
     const int vertices_nr = count_vertices(adjacencyList);
     const int graph_degree = find_max_degree(adjacencyList);
-    const int generations {3000};
+    const int generations {4000};
     const int runs {10};
 
     std::vector<double> times;

@@ -62,3 +62,25 @@ std::vector<int> calculate_col_fit_with_penalizing(const std::vector<std::vector
 
     return population_fitness;
 }
+
+int calculate_col_fit_with_penalizing_chr(const std::vector<int>& chromosome, const std::vector<std::list<int>>& adjacency_list) {
+    int chr_fitness;
+    int max_degree = find_max_degree(adjacency_list);
+
+    int fitness = get_coloring_number(chromosome);
+
+    std::set<std::pair<int, int>> counted_conflicts;
+
+    for (size_t i = 0; i < chromosome.size(); ++i) {
+        int vertex_color = chromosome[i];
+        for (int neighbor : adjacency_list[i]) {
+            if (vertex_color == chromosome[neighbor]) {
+                if (counted_conflicts.insert(std::minmax(i, static_cast<size_t>(neighbor))).second) {
+                    fitness += max_degree;
+                }
+            }
+        }
+    }
+
+    return fitness;
+}

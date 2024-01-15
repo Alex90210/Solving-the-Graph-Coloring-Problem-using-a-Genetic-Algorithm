@@ -28,8 +28,8 @@ std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop
     std::vector<int> pop_values = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
     // std::vector<int> pop_values = calculate_conflict_fitness(pop, adjacency_list);
 
-    scale_values(pop_values, 1.0, 2.0);
-    raise_to_power(pop_values, 0.1);
+    /*scale_values(pop_values, 1.0, 2.0);
+    raise_to_power(pop_values, 0.5);*/
 
     std::vector<std::vector<int>> elite_population = elitism(pop, pop_values, elite_pool);
 

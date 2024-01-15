@@ -31,8 +31,8 @@ void crossover(std::vector<std::vector<int>>& population, const double& crossove
 void crossover_by_fitness(std::vector<std::vector<int>>& population, const double& crossover_probability,
                           const std::vector<std::list<int>>& adjacency_list) {
 
-    std::vector<int> pop_values = calculate_conflict_fitness(population, adjacency_list);
-    // std::vector<int> pop_values = calculate_col_fit_with_penalizing(population, adjacency_list);
+    // std::vector<int> pop_values = calculate_conflict_fitness(population, adjacency_list);
+    std::vector<int> pop_values = calculate_col_fit_with_penalizing(population, adjacency_list, 22);
 
     std::vector<std::size_t> sorted_indices(population.size());
     std::iota(sorted_indices.begin(), sorted_indices.end(), 0);
@@ -41,7 +41,6 @@ void crossover_by_fitness(std::vector<std::vector<int>>& population, const doubl
     });
 
     for (std::size_t i = 0; i + 1 < sorted_indices.size(); i += 2) {
-        // Select two parents for crossover
         std::vector<int>& parent1 = population[sorted_indices[i]];
         std::vector<int>& parent2 = population[sorted_indices[i + 1]];
 

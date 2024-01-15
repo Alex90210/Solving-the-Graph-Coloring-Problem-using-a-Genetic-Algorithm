@@ -1,0 +1,3 @@
+C:/SEM3/AGen/Homework3SA/cmake-build-debug/CMakeFiles/Homework3SA.dir
+C:/SEM3/AGen/Homework3SA/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/SEM3/AGen/Homework3SA/cmake-build-debug/CMakeFiles/rebuild_cache.dir

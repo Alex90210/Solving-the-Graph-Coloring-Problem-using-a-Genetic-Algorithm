@@ -83,12 +83,12 @@ std::mt19937& get_random_engine() {
     return generated_population;
 }*/
 
-std::vector<std::vector<int>> generate_population(const unsigned& population_size, int nr_of_nodes, const int& color_number) {
+std::vector<std::vector<int>> generate_population(const unsigned& population_size, int nr_of_nodes, int graph_degree, int color_number) {
     std::vector<std::vector<int>> generated_population;
 
     for (size_t i = 0; i < population_size; ++i) {
         std::vector<int> chromosome;
-        for (size_t j = 0; j <= color_number; ++j) {
+        for (size_t j = 0; j < graph_degree; ++j) {
             int random_color = get_random_int(0, color_number);
             chromosome.push_back(random_color);
         }

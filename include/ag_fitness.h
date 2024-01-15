@@ -12,5 +12,6 @@ std::vector<int> calculate_coloring_fitness(const std::vector<std::vector<int>>&
 std::vector<int> calculate_col_fit_with_penalizing(const std::vector<std::vector<int>>& population,
                                                    const std::vector<std::list<int>>& adjacency_list,
                                                    const int& best_colorization);
+int calculate_col_fit_with_penalizing_chr(const std::vector<int>& chromosome, const std::vector<std::list<int>>& adjacency_list);
 
 #endif
