@@ -2,10 +2,14 @@
 
 void corrective_mutation_on_every_conflict(std::vector<std::vector<int>>& population, const int& graph_degree,
                                            const std::vector<std::list<int>>& adjacency_list, const int& vertices_nr,
-                                           double mutation_probability) {
+                                           double mutation_probability, int best_colorization) {
 
-    static std::vector<int> all_colors = create_color_vector(graph_degree);
     for (auto& chromosome : population) {
+        // Construct all_colors from the current chromosome
+        std::vector<int> all_colors(chromosome.begin(), chromosome.end());
+        std::sort(all_colors.begin(), all_colors.end());
+        all_colors.erase(std::unique(all_colors.begin(), all_colors.end()), all_colors.end());
+
         if (get_random_double(0, 1) <= mutation_probability) {
             for (size_t i = 0; i < vertices_nr; ++i) {
                 if (has_same_color_neighbor(i, chromosome, adjacency_list)) {
@@ -62,12 +66,16 @@ void random_mutation_on_every_conflict(std::vector<std::vector<int>>& population
 void random_mutation(std::vector<std::vector<int>>& population, const int& graph_degree,
                      const double& mutation_probability) {
 
-    static std::vector<int> all_colors = create_color_vector(graph_degree);
     for (auto& chromosome : population) {
+        // Construct all_colors from the current chromosome
+        std::vector<int> all_colors(chromosome.begin(), chromosome.end());
+        std::sort(all_colors.begin(), all_colors.end());
+        all_colors.erase(std::unique(all_colors.begin(), all_colors.end()), all_colors.end());
+
         for (size_t i = 0; i < chromosome.size(); ++i) {
             // Random chance of mutation
             if (get_random_double(0, 1) < mutation_probability) {
-                int new_color = all_colors[get_random_int(0, graph_degree)]; // it was -1
+                int new_color = all_colors[get_random_int(0, all_colors.size() - 1)];
                 chromosome[i] = new_color;
             }
         }

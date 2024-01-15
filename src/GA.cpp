@@ -19,13 +19,19 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
         current_generation++;
         pop = selection(pop, pop_size, elite_pool, vertices_nr, graph_degree, adjacency_list, best_colorization);
 
+        if (generations_without_improvement > 50000) {
+            random_mutation(pop, graph_degree, mut_p);
+            generations_without_improvement = 0;
+        }
+        else {
+            corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);
+        }
 
-        corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p);
-        random_mutation(pop, graph_degree, mut_p);
+        // corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);
+        // random_mutation(pop, graph_degree, mut_p);
 
         crossover_by_fitness(pop, cx_prob, adjacency_list);
 
-        // pop_values_conflicts = calculate_conflict_fitness(pop, adjacency_list);
         pop_values_conflicts = calculate_col_fit_with_penalizing(pop, adjacency_list, best_colorization);
         std::vector<int> pop_values_colors = calculate_coloring_fitness(pop);
 
@@ -37,6 +43,7 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
 
         if (new_best_colorization < best_colorization) {
             best_colorization = new_best_colorization;
+            // At this point the colours should be consolidated ( 2 4 13 - > 1 2 3 ). And sorted?
             generations_without_improvement = 0;
         }
         else {

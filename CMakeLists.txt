@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 project(Homework3)
 
 set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /STACK:10000000")
 
 add_executable(Homework3 src/main.cpp
         include/generators.h
@@ -20,3 +21,4 @@ add_executable(Homework3 src/main.cpp
         src/ag_selection.cpp
         src/ag_fitness.cpp
         include/ag_fitness.h)
+

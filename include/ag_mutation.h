@@ -9,7 +9,7 @@
 
 void corrective_mutation_on_every_conflict(std::vector<std::vector<int>>& population, const int& graph_degree,
                                            const std::vector<std::list<int>>& adjacency_list, const int& vertices_nr,
-                                           double mutation_probability);
+                                           double mutation_probability, int best_colorization);
 void corrective_mutation_randomly(std::vector<std::vector<int>>& population, const int& graph_degree,
                                   const double& mutation_probability,
                                   const std::vector<std::list<int>>& adjacency_list, const int& vertices_nr);

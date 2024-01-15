@@ -57,11 +57,6 @@ std::vector<std::vector<int>> selection(const std::vector<std::vector<int>>& pop
         int index = select_index(accumulated_probability_vector);
         new_population.push_back(pop[index]);
     }
-    // Insert newly generated chromosomes into the new population
-    /*std::vector<std::vector<int>> new_chromosomes;
-    new_chromosomes.reserve(pop_size / 2);
-    new_chromosomes = generate_population(pop_size / 2, nr_vertices, graph_degree);
-    new_population.insert(new_population.end(), new_chromosomes.begin(), new_chromosomes.end());*/
 
     new_population.insert(new_population.end(), elite_population.begin(), elite_population.end());
 
