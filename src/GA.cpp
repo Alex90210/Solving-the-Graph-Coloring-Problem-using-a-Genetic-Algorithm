@@ -22,10 +22,14 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
         pop = selection(pop, pop_size, elite_pool, vertices_nr, graph_degree, adjacency_list, best_colorization);
 
         if (generations_without_improvement > 50) {
-            random_mutation(pop, graph_degree, 0.3);
-            // corrective_mutation_randomly(pop, graph_degree, mut_p, adjacency_list, vertices_nr);
-            crossover_random_shuffle(pop, cx_prob);
-            generations_without_improvement = 0;
+            if (!greedy_improvement(pop, adjacency_list)) {
+                random_mutation(pop, graph_degree, 0.3);
+                crossover_random_shuffle(pop, cx_prob);
+                generations_without_improvement = 0;
+            }
+            else {
+                crossover_random_shuffle(pop, cx_prob);
+            }
         }
         /*else if (min_conflict < 4) {
             corrective_mutation_randomly(pop, graph_degree, mut_p, adjacency_list, vertices_nr);
@@ -33,7 +37,8 @@ int genetic_algorithm(int pop_size, int elite_pool, int vertices_nr, int graph_d
         }*/
         else {
             corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);
-            crossover_by_fitness(pop, cx_prob, adjacency_list);
+           // crossover_by_fitness(pop, cx_prob, adjacency_list);
+            crossover_random_shuffle(pop, cx_prob);
         }
 
         // corrective_mutation_on_every_conflict(pop, graph_degree, adjacency_list, vertices_nr, mut_p, best_colorization);

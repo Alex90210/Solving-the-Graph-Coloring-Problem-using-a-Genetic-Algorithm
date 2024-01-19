@@ -1,4 +1,4 @@
-#include "../include/utils.h"
+#include "../include/bsa_utils.h"
 
 void read_col_file(const std::string& filename, std::vector<std::list<int>>& adjacency_list) {
     std::ifstream file(filename);

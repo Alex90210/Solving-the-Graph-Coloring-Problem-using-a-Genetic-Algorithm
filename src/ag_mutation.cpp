@@ -157,12 +157,28 @@ void corrective_mutation_until_valid(std::vector<std::vector<int>>& population,
     }
 }
 
-void forced_hill_climber(const std::vector<std::vector<int>>& population, const std::vector<std::list<int>>& adjacency_list) {
+bool greedy_improvement(const std::vector<std::vector<int>>& population, const std::vector<std::list<int>>& adjacency_list) {
     std::vector<int> evaluated = calculate_col_fit_with_penalizing(population, adjacency_list, 10);
     auto iter = std::min_element(evaluated.begin(), evaluated.end());
     int best_fitness = *iter;
     int index = std::distance(evaluated.begin(), iter);
     std::vector<int> best_chromosome = population[index];
 
-    // Work on this if you have time
+    bool improved = false;
+    for(size_t vertex = 0; vertex < best_chromosome.size(); ++vertex) {
+        std::vector<int> adjacent_colors = get_adjacent_colors(vertex, best_chromosome, adjacency_list);
+        std::vector<int> valid_colors = find_non_adjacent_colors(create_color_vector(10), adjacent_colors);
+        for (int color : valid_colors) {
+            std::vector<int> neighbour = best_chromosome;
+            neighbour[vertex] = color;
+            int neighbour_fitness = calculate_col_fit_with_penalizing_chr(neighbour, adjacency_list);
+            if (neighbour_fitness < best_fitness) {
+                best_chromosome = neighbour;
+                best_fitness = neighbour_fitness;
+                improved = true;
+            }
+        }
+    }
+
+    return improved;
 }

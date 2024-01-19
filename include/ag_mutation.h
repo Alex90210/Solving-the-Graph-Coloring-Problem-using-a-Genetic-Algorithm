@@ -26,5 +26,6 @@ void corrective_mutation_until_valid(std::vector<std::vector<int>>& population,
                                      const std::vector<std::list<int>>& adjacency_list,
                                      const int& max_color,
                                      const int max_iterations = 1000);
+bool greedy_improvement(const std::vector<std::vector<int>>& population, const std::vector<std::list<int>>& adjacency_list);
 
 #endif
